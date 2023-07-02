@@ -1,2 +1,2 @@
 # vue-strapi-nuxt
-Vue + Strapi + Nuxt
+Strapi 4 + Nuxt 3
