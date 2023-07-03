@@ -1,11 +1,13 @@
 <template>
-  <h1 class="text-red-500">
-  Первый пробный текст
-  </h1>
+  <div class="app-root">
+    <NuxtPage />
+  </div>
 </template>
 
+<script setup lang="ts"></script>
+
 <style scoped lang="scss">
-.text-red-500 {
+.app-root {
   font-family: 'Cofo Sans', sans-serif;
 }
 </style>
