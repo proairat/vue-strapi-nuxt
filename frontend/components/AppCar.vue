@@ -1,3 +1,1 @@
-<template>
-  AppCar.vue
-</template>
+<template>AppCar.vue</template>

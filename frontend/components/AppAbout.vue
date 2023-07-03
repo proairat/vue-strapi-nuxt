@@ -1,3 +1,1 @@
-<template>
-  AppAbout.vue
-</template>
+<template>AppAbout.vue</template>

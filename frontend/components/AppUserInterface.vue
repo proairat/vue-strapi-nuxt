@@ -37,8 +37,14 @@
       </div>
       <div class="mx-auto max-w-2xl py-32 sm:py-48 lg:py-56">
         <div class="text-center">
-          <h1 class="text-4xl font-bold tracking-tight text-gray-900 sm:text-6xl">Главная страница</h1>
-          <p class="mt-6 text-lg leading-8 text-gray-600">Контент главной страницы</p>
+          <h1
+            class="text-4xl font-bold tracking-tight text-gray-900 sm:text-6xl"
+          >
+            Главная страница
+          </h1>
+          <p class="mt-6 text-lg leading-8 text-gray-600">
+            Контент главной страницы
+          </p>
           <div class="mt-10 flex items-center justify-center gap-x-6">
             <NuxtLink
               to="#"
@@ -46,7 +52,10 @@
             >
               Начать
             </NuxtLink>
-            <NuxtLink to="#" class="text-sm font-semibold leading-6 text-gray-900">
+            <NuxtLink
+              to="#"
+              class="text-sm font-semibold leading-6 text-gray-900"
+            >
               Изучить больше <span aria-hidden="true">→</span>
             </NuxtLink>
           </div>

@@ -1,5 +1,5 @@
-import { defineStore } from 'pinia';
+import { defineStore } from "pinia";
 
-export const useDashboardStore = defineStore('dashboard', () => {
+export const useDashboardStore = defineStore("dashboard", () => {
   return {};
 });

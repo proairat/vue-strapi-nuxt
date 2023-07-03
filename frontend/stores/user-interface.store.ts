@@ -1,10 +1,15 @@
-import { defineStore } from 'pinia';
+import { defineStore } from "pinia";
 
-export const useUserInterfaceStore = defineStore('userInterface', () => {
+export const useUserInterfaceStore = defineStore("userInterface", () => {
   const mobileMenuOpen = ref(false);
   const navigation = ref([
-    { id: 1, title: 'Дашборд', route: '/dashboard', componentName: 'dashboard' },
-    { id: 2, title: 'О компании', route: '/about', componentName: 'about' },
+    {
+      id: 1,
+      title: "Дашборд",
+      route: "/dashboard",
+      componentName: "dashboard",
+    },
+    { id: 2, title: "О компании", route: "/about", componentName: "about" },
   ]);
 
   function toggleMobileMenuOpen(value: boolean) {
