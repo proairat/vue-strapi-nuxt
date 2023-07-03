@@ -12,6 +12,8 @@ export default defineNuxtConfig({
 	},
   devtools: { enabled: true },
 	modules: [
+		'@nuxt/devtools',
 		'@pinia/nuxt',
-	]
-})
+		'nuxt-headlessui'
+	],
+});
