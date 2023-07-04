@@ -46,9 +46,9 @@
 </template>
 
 <script setup lang="ts">
-import { Dialog, DialogPanel } from '@headlessui/vue';
-import { XMarkIcon } from '@heroicons/vue/24/outline';
-import { useUserInterfaceStore } from '~/stores';
+import { Dialog, DialogPanel } from "@headlessui/vue";
+import { XMarkIcon } from "@heroicons/vue/24/outline";
+import { useUserInterfaceStore } from "~/stores";
 
 const userInterfaceStore = useUserInterfaceStore();
 const { toggleMobileMenuOpen, getMobileMenuOpen, getNavigation } = userInterfaceStore;

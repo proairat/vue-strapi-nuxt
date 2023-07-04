@@ -38,8 +38,8 @@
 </template>
 
 <script setup lang="ts">
-import { Bars3Icon } from '@heroicons/vue/24/outline';
-import { useUserInterfaceStore } from '~/stores';
+import { Bars3Icon } from "@heroicons/vue/24/outline";
+import { useUserInterfaceStore } from "~/stores";
 
 const userInterfaceStore = useUserInterfaceStore();
 const { toggleMobileMenuOpen, getNavigation } = userInterfaceStore;
