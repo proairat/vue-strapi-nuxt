@@ -8,15 +8,11 @@ export default defineNuxtConfig({
     },
   },
   devtools: { enabled: true },
-  modules: [
-    "@nuxt/devtools",
-    "@pinia/nuxt",
-    "nuxt-headlessui",
-    "@nuxtjs/eslint-module",
-  ],
+  modules: ["@nuxt/devtools", "@pinia/nuxt", "nuxt-headlessui", "@nuxtjs/eslint-module", "@nuxtjs/strapi"],
   vite: {
-    ssr: {
-      
-    }
-  }
+    ssr: {},
+  },
+  strapi: {
+    // Options
+  },
 });
