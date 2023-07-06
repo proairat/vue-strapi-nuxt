@@ -1,10 +1,7 @@
 <template>
-  <div class="bg-white">
-    <header class="absolute inset-x-0 top-0 z-50">
-      <AppMainNav />
-      <AppHamburgerNav />
-    </header>
-    <div class="relative isolate px-6 pt-14 lg:px-8">
+  <div class="max-w-7xl mx-auto">
+    <AppNavigation />
+    <div class="relative isolate mx-6 mt-24 lg:mx-8">
       <div
         class="absolute inset-x-0 -top-40 -z-10 transform-gpu overflow-hidden blur-3xl sm:-top-80"
         aria-hidden="true"
@@ -33,7 +30,7 @@
           "
         />
       </div>
-      <AppCar />
+      <AppFillDataOfCarsToTheTable />
       <div
         class="absolute inset-x-0 top-[calc(100%-13rem)] -z-10 transform-gpu overflow-hidden blur-3xl sm:top-[calc(100%-30rem)]"
         aria-hidden="true"
@@ -65,7 +62,3 @@
     </div>
   </div>
 </template>
-
-<script setup lang="ts"></script>
-
-<style scoped lang="scss"></style>

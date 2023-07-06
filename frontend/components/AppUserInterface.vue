@@ -1,10 +1,6 @@
 <template>
-  AppUserInterface.vue
-  <div class="bg-white">
-    <header class="absolute inset-x-0 top-0 z-50">
-      <AppMainNav />
-      <AppHamburgerNav />
-    </header>
+  <div class="max-w-7xl mx-auto">
+    <AppNavigation />
     <div class="relative isolate px-6 pt-14 lg:px-8">
       <div
         class="absolute inset-x-0 -top-40 -z-10 transform-gpu overflow-hidden blur-3xl sm:-top-80"
