@@ -93,35 +93,110 @@
       </tbody>
     </table>
   </div>
-  <button @click="toggleColor">Переключить цвет</button>
+  <div>
+    <label for="first_name" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">First name</label>
+    <input
+      id="first_name"
+      type="text"
+      class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+      placeholder="John"
+      required
+    />
+  </div>
+  <RenderSlot />
 </template>
 
 <script setup lang="ts">
 import { TableHeaderCar, TableDataCar } from "~/types/interfaces";
 import { useDashboardStore } from "~/stores";
-
-const dashboardStore = useDashboardStore();
-const { toggleModalOpen } = dashboardStore;
+import AppModal from "./AppModal.vue";
 
 interface Props {
   tableHeader: Array<TableHeaderCar>;
   tableData: Array<TableDataCar>;
 }
 
-const props = defineProps<Props>();
-const isRed = ref(false);
+const dashboardStore = useDashboardStore();
+const { toggleModalOpen, getRenderModal, setRenderModal } = dashboardStore;
 
-function toggleColor() {
-  isRed.value = !isRed.value;
-}
+const props = defineProps<Props>();
+
+const RenderSlot = () =>
+  h(AppModal, null, {
+    caption: () =>
+      h(
+        "div",
+        props.tableData.map((item, index) => {
+          console.log(Object.keys(item.attributes));
+          return [
+            h(
+              "label",
+              {
+                key: index,
+                for: "first_name",
+                class: "block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300",
+              },
+              item.attributes.Title
+            ),
+            h("input", {
+              key: index,
+              type: "text",
+              id: "first_name",
+              class:
+                "bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500",
+              value: item.attributes.Price,
+              placeholder: "John",
+              required: "required",
+            }),
+          ];
+        })
+      ),
+    action: () =>
+      h(
+        "button",
+        {
+          type: "button",
+          class: [
+            "inline-flex w-full justify-center rounded-md px-3 py-2 text-sm font-semibold text-white shadow-sm sm:ml-3 sm:w-auto",
+            getRenderModal().actionSlot.classes,
+          ],
+          onClick: () => {
+            toggleModalOpen(false);
+          },
+        },
+        getRenderModal().actionSlot.text
+      ),
+    cancel: () =>
+      h(
+        "button",
+        {
+          type: "button",
+          class: [
+            "mt-3 inline-flex w-full justify-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 sm:mt-0 sm:w-auto",
+          ],
+          onClick: () => {
+            toggleModalOpen(false);
+          },
+        },
+        getRenderModal().cancelSlot.text
+      ),
+  });
 
 function editHandler(id: number) {
   console.log(`${id} editHandler`);
+  setRenderModal("captionSlot.text", String(id));
+  setRenderModal("actionSlot.classes", "bg-emerald-600 hover:bg-emerald-500");
+  setRenderModal("actionSlot.text", "Изменить");
+  setRenderModal("cancelSlot.text", "Отменить изменение");
   toggleModalOpen(true);
 }
 
 function deleteHandler(id: number) {
   console.log(`${id} deleteHandler`);
+  setRenderModal("captionSlot.text", String(id));
+  setRenderModal("actionSlot.classes", "bg-rose-600 hover:bg-rose-500");
+  setRenderModal("actionSlot.text", "Удалить");
+  setRenderModal("cancelSlot.text", "Отменить удаление");
   toggleModalOpen(true);
 }
 </script>

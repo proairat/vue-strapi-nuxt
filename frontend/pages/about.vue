@@ -1,4 +1,4 @@
 <template>
-  <div>ViewAboutdRoute.vue</div>
   <NuxtPage />
+  <AppAbout />
 </template>

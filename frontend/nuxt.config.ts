@@ -9,10 +9,16 @@ export default defineNuxtConfig({
   },
   devtools: { enabled: true },
   modules: ["@nuxt/devtools", "@pinia/nuxt", "nuxt-headlessui", "@nuxtjs/eslint-module", "@nuxtjs/strapi"],
-  vite: {
-    ssr: {},
-  },
   strapi: {
     // Options
+  },
+  hooks: {
+    "pages:extend"(pages) {
+      pages.push({
+        path: "/:pathMatch(.*)*",
+        name: "/user-interface",
+        redirect: "/user-interface",
+      });
+    },
   },
 });
