@@ -8,7 +8,7 @@
         <div class="flex items-center justify-between">
           <NuxtLink to="#" class="-m-1.5 p-1.5">
             <span class="sr-only">АГИМА</span>
-            <img class="h-8 w-auto" src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600" alt="" />
+            <img class="h-8 w-auto" src="/img/logo.png" alt="АГИМА логотип" />
           </NuxtLink>
           <button type="button" class="-m-2.5 rounded-md p-2.5 text-gray-700" @click="toggleMobileMenuOpen(false)">
             <span class="sr-only">Закрыть меню</span>
