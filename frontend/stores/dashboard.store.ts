@@ -4,14 +4,17 @@ export const useDashboardStore = defineStore("dashboard", () => {
   const modalOpen = ref(false);
   const renderModal = ref({
     captionSlot: {
+      id: 0,
       text: "",
       classes: "",
     },
     actionSlot: {
+      id: 0,
       text: "",
       classes: "",
     },
     cancelSlot: {
+      id: 0,
       text: "",
       classes: "",
     },

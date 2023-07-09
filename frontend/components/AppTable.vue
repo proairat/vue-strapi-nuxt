@@ -93,64 +93,77 @@
       </tbody>
     </table>
   </div>
-  <div>
-    <label for="first_name" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">First name</label>
-    <input
-      id="first_name"
-      type="text"
-      class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-      placeholder="John"
-      required
-    />
-  </div>
   <RenderSlot />
 </template>
 
 <script setup lang="ts">
-import { TableHeaderCar, TableDataCar } from "~/types/interfaces";
+import { ITableHeaderCar, ITableDataCar } from "~/types/interfaces";
 import { useDashboardStore } from "~/stores";
 import AppModal from "./AppModal.vue";
+import { EStrapiFields } from "~/types/enums";
+import { useFetchComposable } from "~/composables/use-fetch";
+import { BASE_URL_GET_CARS } from "~/api";
+import type { Cars } from "~/types";
 
 interface Props {
-  tableHeader: Array<TableHeaderCar>;
-  tableData: Array<TableDataCar>;
+  tableHeader: Array<ITableHeaderCar>;
+  tableData: Array<ITableDataCar>;
 }
 
 const dashboardStore = useDashboardStore();
 const { toggleModalOpen, getRenderModal, setRenderModal } = dashboardStore;
-
 const props = defineProps<Props>();
 
 const RenderSlot = () =>
   h(AppModal, null, {
     caption: () =>
-      h(
-        "div",
-        props.tableData.map((item, index) => {
-          console.log(Object.keys(item.attributes));
-          return [
-            h(
-              "label",
-              {
-                key: index,
-                for: "first_name",
-                class: "block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300",
-              },
-              item.attributes.Title
-            ),
-            h("input", {
-              key: index,
-              type: "text",
-              id: "first_name",
-              class:
-                "bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500",
-              value: item.attributes.Price,
-              placeholder: "John",
-              required: "required",
-            }),
-          ];
-        })
-      ),
+      h(() => {
+        const arrFind = props.tableData.find(({ id }) => id === Number(getRenderModal().captionSlot.id));
+        if (arrFind) {
+          const nonEditableEntities = [EStrapiFields.createdAt, EStrapiFields.updatedAt, EStrapiFields.publishedAt];
+          const nonEditableFunc = (checkIncludes: string, ifParam: string, elseParam: string) =>
+            !nonEditableEntities.includes(checkIncludes as EStrapiFields) ? ifParam : elseParam;
+          return h(() => {
+            const tags = [
+              h(
+                "div",
+                {
+                  class: "font-bold text-lg",
+                },
+                getRenderModal().captionSlot.text
+              ),
+            ];
+            for (let [label, input] of Object.entries(arrFind.attributes)) {
+              tags.push(
+                h(
+                  "label",
+                  {
+                    key: arrFind.id + "label",
+                    for: "first_name",
+                    class: "block mt-3 mb-1 text-sm font-medium text-gray-900 dark:text-gray-300",
+                  },
+                  label
+                ),
+                h("input", {
+                  key: arrFind.id + "input",
+                  type: "text",
+                  id: "first_name",
+                  class: [
+                    "border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500",
+                    nonEditableFunc(label, "", "cursor-not-allowed"),
+                    nonEditableFunc(label, "bg-gray-50", "bg-gray-200"),
+                  ],
+                  value: input,
+                  placeholder: "John",
+                  required: "required",
+                  [nonEditableFunc(label, "", "disabled")]: nonEditableFunc(label, "", "disabled"),
+                })
+              );
+            }
+            return h("div", { class: "w-full" }, tags);
+          });
+        }
+      }),
     action: () =>
       h(
         "button",
@@ -161,7 +174,9 @@ const RenderSlot = () =>
             getRenderModal().actionSlot.classes,
           ],
           onClick: () => {
-            toggleModalOpen(false);
+            // toggleModalOpen(false);
+            anotherFunction();
+            anotherFunction2();
           },
         },
         getRenderModal().actionSlot.text
@@ -184,7 +199,8 @@ const RenderSlot = () =>
 
 function editHandler(id: number) {
   console.log(`${id} editHandler`);
-  setRenderModal("captionSlot.text", String(id));
+  setRenderModal("captionSlot.id", String(id));
+  setRenderModal("captionSlot.text", `Изменение записи № ${String(id)}`);
   setRenderModal("actionSlot.classes", "bg-emerald-600 hover:bg-emerald-500");
   setRenderModal("actionSlot.text", "Изменить");
   setRenderModal("cancelSlot.text", "Отменить изменение");
@@ -193,11 +209,33 @@ function editHandler(id: number) {
 
 function deleteHandler(id: number) {
   console.log(`${id} deleteHandler`);
-  setRenderModal("captionSlot.text", String(id));
+  setRenderModal("captionSlot.id", String(id));
+  setRenderModal("captionSlot.text", `Удаление записи № ${String(id)}`);
   setRenderModal("actionSlot.classes", "bg-rose-600 hover:bg-rose-500");
   setRenderModal("actionSlot.text", "Удалить");
   setRenderModal("cancelSlot.text", "Отменить удаление");
   toggleModalOpen(true);
+}
+
+function anotherFunction() {
+  console.log("click anotherFunction");
+  let {
+    data: cars,
+    pending,
+    error,
+  } = useFetchComposable({
+    url: BASE_URL_GET_CARS,
+    immediate: false,
+  });
+
+  console.log("Машинки cars", cars.value);
+}
+
+async function anotherFunction2() {
+  const { find, create } = useStrapi();
+  // const response = await find('products');
+  // console.log('response', response);
+  await create("products", { name: "My restaurant" });
 }
 </script>
 

@@ -10,4 +10,16 @@ enum EHttpMethods {
   PATCH = "PATCH",
 }
 
-export { EHttpMethods };
+enum EStrapiFields {
+  createdAt = "createdAt",
+  updatedAt = "updatedAt",
+  publishedAt = "publishedAt",
+}
+
+enum ResponseCode {
+  Success = 200,
+  NotFound = 404,
+  InternalServerError = 500,
+}
+
+export { EHttpMethods, EStrapiFields, ResponseCode };
