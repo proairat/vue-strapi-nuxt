@@ -1,4 +1,5 @@
 import { EHttpMethods } from "~/types/enums";
+import { IUseFetchParamsExtended } from "~/types/interfaces";
 
 export function useFetchComposable({
   url,
@@ -6,13 +7,7 @@ export function useFetchComposable({
   method = EHttpMethods.GET,
   body = null,
   immediate = true,
-}: {
-  url: string;
-  urlVar?: string;
-  method?: EHttpMethods;
-  body?: BodyInit | null;
-  immediate?: boolean | undefined;
-}) {
+}: IUseFetchParamsExtended) {
   const { data, pending, refresh, execute, error } = useFetch(urlVar ? `${url}${urlVar}` : url, {
     method,
     body,

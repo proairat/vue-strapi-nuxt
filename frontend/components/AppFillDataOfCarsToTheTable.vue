@@ -1,34 +1,27 @@
 <template>
-  <!--
   <template v-if="pending">Получение данных...</template>
   <template v-else-if="error">
     <AlertsAppAlertError>{{ error }}</AlertsAppAlertError>
   </template>
   <template v-else>
+    <button type="button" @click="updateData">Обновить данные</button>
     <AppTable :table-header="tableColumnNames" :table-data="cars.data" />
     <pre>{{ cars.data }}</pre>
-    1
-  </template>-->
-  <div>Получение данных?</div>
+  </template>
 </template>
 
 <script setup lang="ts">
-import { useFetchComposable } from "~/composables/use-fetch";
-import { BASE_URL_GET_CARS } from "~/api";
+import { EHttpMethods } from "~/types/enums";
+import { BASE_URL_PRODUCTS } from "~/api";
 import { StrapiMethods } from "~/classes/CStrapi";
-import { CHTTPMethods } from "~/classes";
 
-const dp = new CHTTPMethods();
-let { data: cars, pending, error } = await dp.get(BASE_URL_GET_CARS);
-
-//let { data: cars, pending, error } = StrapiMethods.collectionGetList(BASE_URL_GET_CARS);
-//console.log('pending', pending.value, 'data', cars.value);
-
-/*
-let { data: cars, pending, error } = useFetchComposable({
-  url: BASE_URL_GET_CARS,
+let {
+  data: cars,
+  pending,
+  error,
+} = await StrapiMethods.collectionGetList({
+  url: BASE_URL_PRODUCTS,
 });
-*/
 
 const tableColumnNames = ref([
   {
@@ -44,6 +37,20 @@ const tableColumnNames = ref([
   { id: 5, name: "Тип автомобиля" },
   { id: 6, name: "Действия" },
 ]);
+
+async function updateData() {
+  console.log("updateData");
+  await StrapiMethods.collectionUpdateEntry({
+    url: BASE_URL_PRODUCTS,
+    urlVar: "/1",
+    method: EHttpMethods.PUT,
+    body: {
+      data: {
+        Title: "Hello!!",
+      },
+    },
+  });
+}
 </script>
 
 <style scoped lang="scss">

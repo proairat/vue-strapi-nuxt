@@ -1,18 +1,17 @@
-import { BASE_URL_GET_CARS } from "api";
 import { TResponseHTTPMethods } from "~/types/types";
-import { IHTTPMethods } from "~/types/interfaces";
+import {
+  IHTTPMethods,
+  IUseFetchParamsBase,
+  IUseFetchParamsPostBody,
+  IUseFetchParamsPutBody,
+  IUseFetchParamsDelete,
+  IUseFetchParamsUrlVarOptional,
+  IUseFetchParamsUrlVarRequired,
+} from "~/types/interfaces";
 
 class CHTTPMethods implements IHTTPMethods {
-  async get(url: string): TResponseHTTPMethods {
-    const { data, pending, refresh, execute, error } = useFetchComposable({
-      url,
-    });
-
-    console.log("CHTTPMethods.get data", data);
-    console.log("CHTTPMethods.get pending", pending);
-    console.log("CHTTPMethods.get refresh", refresh);
-    console.log("CHTTPMethods.get execute", execute);
-    console.log("CHTTPMethods.get error", error);
+  async get({ url, urlVar, immediate }: IUseFetchParamsBase & IUseFetchParamsUrlVarOptional): TResponseHTTPMethods {
+    const { data, pending, refresh, execute, error } = useFetchComposable({ url, urlVar, immediate });
 
     return {
       data,
@@ -23,11 +22,13 @@ class CHTTPMethods implements IHTTPMethods {
     };
   }
 
-  async post(url: string, body: any): TResponseHTTPMethods {
+  async post({ url, method, body, immediate }: IUseFetchParamsBase & IUseFetchParamsPostBody): TResponseHTTPMethods {
     const { data, pending, refresh, execute, error } = useFetchComposable({
       url,
+      method,
+      body,
+      immediate,
     });
-
     return {
       data,
       pending,
@@ -37,11 +38,20 @@ class CHTTPMethods implements IHTTPMethods {
     };
   }
 
-  async put(url: string, body: any): TResponseHTTPMethods {
+  async put({
+    url,
+    urlVar,
+    method,
+    body,
+    immediate,
+  }: IUseFetchParamsBase & IUseFetchParamsPutBody & IUseFetchParamsUrlVarRequired): TResponseHTTPMethods {
     const { data, pending, refresh, execute, error } = useFetchComposable({
       url,
+      urlVar,
+      method,
+      body,
+      immediate,
     });
-
     return {
       data,
       pending,
@@ -51,11 +61,18 @@ class CHTTPMethods implements IHTTPMethods {
     };
   }
 
-  async delete(url: string): TResponseHTTPMethods {
+  async delete({
+    url,
+    urlVar,
+    method,
+    immediate,
+  }: IUseFetchParamsBase & IUseFetchParamsDelete & IUseFetchParamsUrlVarRequired): TResponseHTTPMethods {
     const { data, pending, refresh, execute, error } = useFetchComposable({
       url,
+      urlVar,
+      method,
+      immediate,
     });
-
     return {
       data,
       pending,

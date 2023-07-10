@@ -93,6 +93,9 @@
       </tbody>
     </table>
   </div>
+  <template v-if="!resultCollectionDeleteEntryError">
+    <AlertsAppAlertSuccess>Удаление записи прошло успешно!</AlertsAppAlertSuccess>
+  </template>
   <RenderSlot />
 </template>
 
@@ -100,10 +103,9 @@
 import { ITableHeaderCar, ITableDataCar } from "~/types/interfaces";
 import { useDashboardStore } from "~/stores";
 import AppModal from "./AppModal.vue";
-import { EStrapiFields } from "~/types/enums";
-import { useFetchComposable } from "~/composables/use-fetch";
-import { BASE_URL_GET_CARS } from "~/api";
-import type { Cars } from "~/types";
+import { EHttpMethods, EStrapiFields } from "~/types/enums";
+import { BASE_URL_PRODUCTS } from "~/api";
+import { StrapiMethods } from "~/classes/CStrapi";
 
 interface Props {
   tableHeader: Array<ITableHeaderCar>;
@@ -197,7 +199,9 @@ const RenderSlot = () =>
       ),
   });
 
-function editHandler(id: number) {
+let resultCollectionDeleteEntryError;
+
+async function editHandler(id: number) {
   console.log(`${id} editHandler`);
   setRenderModal("captionSlot.id", String(id));
   setRenderModal("captionSlot.text", `Изменение записи № ${String(id)}`);
@@ -205,9 +209,11 @@ function editHandler(id: number) {
   setRenderModal("actionSlot.text", "Изменить");
   setRenderModal("cancelSlot.text", "Отменить изменение");
   toggleModalOpen(true);
+
+  // await StrapiMethods.collectionUpdateEntry
 }
 
-function deleteHandler(id: number) {
+async function deleteHandler(id: number) {
   console.log(`${id} deleteHandler`);
   setRenderModal("captionSlot.id", String(id));
   setRenderModal("captionSlot.text", `Удаление записи № ${String(id)}`);
@@ -215,27 +221,25 @@ function deleteHandler(id: number) {
   setRenderModal("actionSlot.text", "Удалить");
   setRenderModal("cancelSlot.text", "Отменить удаление");
   toggleModalOpen(true);
+
+  ({ error: resultCollectionDeleteEntryError } = await StrapiMethods.collectionDeleteEntry({
+    url: BASE_URL_PRODUCTS,
+    urlVar: `/${id}`,
+    method: EHttpMethods.DELETE,
+  }));
+
+  toggleModalOpen(false);
 }
 
 function anotherFunction() {
   console.log("click anotherFunction");
-  let {
-    data: cars,
-    pending,
-    error,
-  } = useFetchComposable({
-    url: BASE_URL_GET_CARS,
-    immediate: false,
-  });
-
-  console.log("Машинки cars", cars.value);
 }
 
 async function anotherFunction2() {
   const { find, create } = useStrapi();
   // const response = await find('products');
   // console.log('response', response);
-  await create("products", { name: "My restaurant" });
+  // await create("products", { name: "My restaurant" });
 }
 </script>
 

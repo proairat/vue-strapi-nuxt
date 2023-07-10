@@ -1,23 +1,34 @@
 import { TResponseHTTPMethods } from "types/types";
-import { ICollectionType, IHTTPMethods } from "~/types/interfaces";
+import {
+  ICollectionType,
+  IUseFetchParamsBase,
+  IUseFetchParamsPostBody,
+  IUseFetchParamsPutBody,
+  IUseFetchParamsDelete,
+  IUseFetchParamsUrlVarRequired,
+} from "~/types/interfaces";
 import { CHTTPMethods } from "~/classes";
 
 class CCollectionType implements ICollectionType {
   constructor(private readonly httpMethods: CHTTPMethods) {}
-  async getAListOfEntries(url: string): TResponseHTTPMethods {
-    return this.httpMethods.get(url);
+  async getAListOfEntries(useFetchParams: IUseFetchParamsBase): TResponseHTTPMethods {
+    return this.httpMethods.get(useFetchParams);
   }
-  async createAnEntry(url: string, body: any) {
-    return this.httpMethods.post(url, body);
+  async createAnEntry(useFetchParams: IUseFetchParamsBase & IUseFetchParamsPostBody): TResponseHTTPMethods {
+    return this.httpMethods.post(useFetchParams);
   }
-  async getAnEntry(url: string) {
-    return this.httpMethods.get(url);
+  async getAnEntry(useFetchParams: IUseFetchParamsBase & IUseFetchParamsUrlVarRequired): TResponseHTTPMethods {
+    return this.httpMethods.get(useFetchParams);
   }
-  async updateAnEntry(url: string, body: any) {
-    return this.httpMethods.put(url, body);
+  async updateAnEntry(
+    useFetchParams: IUseFetchParamsBase & IUseFetchParamsPutBody & IUseFetchParamsUrlVarRequired
+  ): TResponseHTTPMethods {
+    return this.httpMethods.put(useFetchParams);
   }
-  async deleteAnEntry(url: string) {
-    return this.httpMethods.delete(url);
+  async deleteAnEntry(
+    useFetchParams: IUseFetchParamsBase & IUseFetchParamsDelete & IUseFetchParamsUrlVarRequired
+  ): TResponseHTTPMethods {
+    return this.httpMethods.delete(useFetchParams);
   }
 }
 
