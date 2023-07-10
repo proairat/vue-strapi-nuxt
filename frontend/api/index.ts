@@ -1,13 +1,13 @@
 /*
-│ HEAD|GET           │ /api/cars                                                                   │
+│ HEAD|GET           │ /api/products                                                                   │
 ├────────────────────┼─────────────────────────────────────────────────────────────────────────────┤
-│ HEAD|GET           │ /api/cars/:id                                                               │
+│ HEAD|GET           │ /api/products/:id                                                               │
 ├────────────────────┼─────────────────────────────────────────────────────────────────────────────┤
-│ POST               │ /api/cars                                                                   │
+│ POST               │ /api/products                                                                   │
 ├────────────────────┼─────────────────────────────────────────────────────────────────────────────┤
-│ PUT                │ /api/cars/:id                                                               │
+│ PUT                │ /api/products/:id                                                               │
 ├────────────────────┼─────────────────────────────────────────────────────────────────────────────┤
-│ DELETE             │ /api/cars/:id                                                               │
+│ DELETE             │ /api/products/:id                                                               │
 ├────────────────────┼─────────────────────────────────────────────────────────────────────────────┤
 │ HEAD|GET           │ /api/categories                                                             │
 ├────────────────────┼─────────────────────────────────────────────────────────────────────────────┤
@@ -23,7 +23,7 @@
 */
 
 const BASE_URL = "http://localhost:1337/api";
-const BASE_URL_GET_CARS = `${BASE_URL}/products`;
+const BASE_URL_PRODUCTS = `${BASE_URL}/products`;
 const BASE_URL_GET_CATEGORIES = `${BASE_URL}/categories`;
 
-export { BASE_URL, BASE_URL_GET_CARS, BASE_URL_GET_CATEGORIES };
+export { BASE_URL, BASE_URL_PRODUCTS, BASE_URL_GET_CATEGORIES };
