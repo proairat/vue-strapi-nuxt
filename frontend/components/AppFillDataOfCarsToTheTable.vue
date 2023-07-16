@@ -1,4 +1,5 @@
 <template>
+  <hr />
   <template v-if="pending">Получение данных...</template>
   <template v-else-if="error">
     <AlertsAppAlertError>{{ error }}</AlertsAppAlertError>
@@ -8,6 +9,7 @@
     <AppTable :table-header="tableColumnNames" :table-data="cars.data" />
     <pre>{{ cars.data }}</pre>
   </template>
+  <hr />
 </template>
 
 <script setup lang="ts">
@@ -46,7 +48,7 @@ async function updateData() {
     method: EHttpMethods.PUT,
     body: {
       data: {
-        Title: "Hello!!",
+        Title: "Test update 1",
       },
     },
   });
